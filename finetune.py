@@ -21,6 +21,9 @@ from trl import SFTTrainer
 
 torch.manual_seed(42)
 
+os.environ['MASTER_ADDR'] = 'localhost'
+os.environ['MASTER_PORT'] = '12355'
+os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2,3,4,5,6,7"
 
 @dataclass
 class ScriptArguments:
