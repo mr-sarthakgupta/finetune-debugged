@@ -47,8 +47,8 @@ class ScriptArguments:
     max_seq_length: Optional[int] = field(default=256)
     model_name: Optional[str] = field(
         # default="mistralai/Mistral-7B-Instruct-v0.1",
-        # default="meta-llama/Llama-3.2-1B",
-        default="mistralai/Mixtral-8x7B-v0.1",
+        default="meta-llama/Llama-3.2-1B",
+        # default="mistralai/Mixtral-8x7B-v0.1",
         # default="TinyLlama/TinyLlama-1.1B-step-50K-105b",
         metadata={
             "help": "The model that you want to train from the Hugging Face hub. E.g. gpt2, gpt2-xl, bert, etc."
