@@ -107,8 +107,8 @@ class ScriptArguments:
 
         metadata={"help": "Learning rate schedule. Constant a bit better than cosine, and has advantage for analysis"},
     )
-    max_steps: int = field(default=10000000000, metadata={"help": "How many optimizer update steps to take"})
-    # max_steps: int = field(default=2, metadata={"help": "How many optimizer update steps to take"})
+    # max_steps: int = field(default=10000000000, metadata={"help": "How many optimizer update steps to take"})
+    max_steps: int = field(default=2, metadata={"help": "How many optimizer update steps to take"})
     warmup_steps: int = field(default=100, metadata={"help": "# of steps to do a warmup for"})
     group_by_length: bool = field(
         default=True,
