@@ -1,5 +1,5 @@
 ---
-base_model: mistralai/Mixtral-8x7B-v0.1
+base_model: meta-llama/Llama-3.2-1B
 library_name: peft
 ---
 

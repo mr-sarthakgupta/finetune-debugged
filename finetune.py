@@ -105,6 +105,7 @@ class ScriptArguments:
         metadata={"help": "Learning rate schedule. Constant a bit better than cosine, and has advantage for analysis"},
     )
     max_steps: int = field(default=10000000000, metadata={"help": "How many optimizer update steps to take"})
+    # max_steps: int = field(default=2, metadata={"help": "How many optimizer update steps to take"})
     warmup_steps: int = field(default=100, metadata={"help": "# of steps to do a warmup for"})
     group_by_length: bool = field(
         default=True,
@@ -254,20 +255,19 @@ trainer = SFTTrainer(
 
 trainer.train()
 
-
-if script_args.merge_and_push:
-    output_dir = os.path.join(script_args.output_dir, "final_checkpoints")
-    trainer.model.save_pretrained(output_dir)
+output_dir = os.path.join(script_args.output_dir, "final_checkpoints")
+trainer.model.save_pretrained(output_dir)
 
 
-    # Free memory for merging weights
-    del model
-    torch.cuda.empty_cache()
+# Free memory for merging weights
+del model
+torch.cuda.empty_cache()
 
 
-    model = AutoPeftModelForCausalLM.from_pretrained(output_dir, device_map="auto", torch_dtype=torch.bfloat16)
-    model = model.merge_and_unload()
+model = AutoPeftModelForCausalLM.from_pretrained(output_dir, device_map="auto", torch_dtype=torch.bfloat16)
+model = model.merge_and_unload()
 
 
-    output_merged_dir = os.path.join(script_args.output_dir, "final_merged_checkpoint")
-    model.save_pretrained(output_merged_dir, safe_serialization=True)
+output_merged_dir = os.path.join(script_args.output_dir, "final_merged_checkpoint")
+model.save_pretrained(output_merged_dir, safe_serialization=True)
+model.push_to_hub("mrsarthakgupta/peft-8x7b-lora-16-8-0.0", use_auth_token=True)
